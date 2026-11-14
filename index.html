@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Study Mate | AI 학습 플래너</title>
 
 <style>
@@ -11,36 +10,44 @@
 
 :root {
   --blue: #5279ed;
-  --light-blue: #edf2ff;
+  --blue-light: #edf2ff;
   --text: #27344c;
   --muted: #8995a8;
   --border: #edf0f6;
+  --bg: #f6f8fd;
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
-  min-height: 100vh;
-  padding: 25px 18px;
   font-family: 'Pretendard', sans-serif;
   color: var(--text);
-
   background:
     radial-gradient(circle at 10% 5%, #e6edff, transparent 35%),
     radial-gradient(circle at 90% 95%, #e5f3ff, transparent 35%),
-    #f6f8fd;
+    var(--bg);
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 .container {
   max-width: 1150px;
   margin: auto;
-  padding: 32px 42px;
   background: rgba(255,255,255,.96);
   border-radius: 25px;
+  padding: 30px 40px;
   box-shadow: 0 12px 45px rgba(70,90,140,.08);
 }
 
@@ -50,13 +57,13 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 55px;
+  margin-bottom: 42px;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 10px;
   font-size: 20px;
   font-weight: 800;
 }
@@ -64,28 +71,56 @@ header {
 .logo-icon {
   width: 39px;
   height: 39px;
-  display: grid;
-  place-items: center;
   background: var(--blue);
   color: white;
   border-radius: 12px;
-  font-size: 20px;
+  display: grid;
+  place-items: center;
 }
 
-.tag {
-  padding: 9px 15px;
+.header-tag {
   background: #f0f3fa;
+  padding: 9px 15px;
   border-radius: 20px;
   font-size: 11px;
   color: #65738c;
   font-weight: 700;
 }
 
+/* NAVIGATION */
+
+.navigation {
+  display: flex;
+  gap: 8px;
+  padding: 6px;
+  background: #f5f7fc;
+  border-radius: 14px;
+  margin-bottom: 35px;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 13px 8px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  color: #8290a6;
+  font-size: 13px;
+  font-weight: 600;
+  transition: .2s;
+}
+
+.nav-btn.active {
+  background: white;
+  color: var(--blue);
+  box-shadow: 0 3px 12px rgba(50,70,120,.08);
+}
+
 /* HERO */
 
 .hero {
   text-align: center;
-  margin-bottom: 42px;
+  margin-bottom: 38px;
 }
 
 .eyebrow {
@@ -93,7 +128,7 @@ header {
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1.5px;
-  margin-bottom: 17px;
+  margin-bottom: 15px;
 }
 
 .hero h1 {
@@ -113,27 +148,27 @@ header {
   line-height: 1.9;
 }
 
-/* CARDS */
+/* HOME CARDS */
 
 .section-heading {
   font-size: 14px;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
 }
 
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 34px;
+  gap: 15px;
 }
 
 .card {
-  padding: 23px;
-  min-height: 150px;
-  background: white;
   border: 1px solid var(--border);
   border-radius: 17px;
+  padding: 23px;
+  background: white;
+  text-align: left;
+  min-height: 175px;
   transition: .2s;
 }
 
@@ -148,7 +183,7 @@ header {
   height: 42px;
   display: grid;
   place-items: center;
-  background: var(--light-blue);
+  background: var(--blue-light);
   border-radius: 12px;
   font-size: 20px;
   margin-bottom: 15px;
@@ -160,162 +195,489 @@ header {
 }
 
 .card p {
+  color: var(--muted);
   font-size: 12px;
   line-height: 1.7;
+}
+
+.card-arrow {
+  display: block;
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 15px;
+}
+
+/* COMMON VIEW */
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+.page-heading {
+  margin-bottom: 22px;
+}
+
+.page-heading h2 {
+  font-size: 25px;
+  margin-bottom: 9px;
+}
+
+.page-heading p {
   color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
 }
 
-/* CHAT SECTION */
+.back-btn {
+  border: 1px solid var(--border);
+  background: white;
+  color: #718099;
+  padding: 9px 14px;
+  border-radius: 9px;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
 
-.chat-box {
-  padding: 20px;
-  background: #f8faff;
+/* AGENT */
+
+.agent-box {
   border: 1px solid #e9eef9;
-  border-radius: 20px;
+  background: #f8faff;
+  padding: 16px;
+  border-radius: 18px;
 }
 
-.chat-header {
+.agent-header {
   display: flex;
   align-items: center;
-  gap: 11px;
-  margin-bottom: 17px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
-.bot-icon {
-  width: 40px;
-  height: 40px;
+.agent-icon {
+  width: 38px;
+  height: 38px;
   display: grid;
   place-items: center;
   background: #e6edff;
-  border-radius: 12px;
-  font-size: 20px;
+  border-radius: 11px;
+  font-size: 19px;
 }
 
-.chat-title h2 {
-  font-size: 15px;
-  margin-bottom: 5px;
+.agent-header h3 {
+  font-size: 14px;
 }
 
-.chat-title p {
-  color: var(--muted);
+.agent-header p {
   font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
 }
 
-.status {
+.agent-status {
   margin-left: auto;
   color: #36ad83;
   font-size: 11px;
 }
 
-.status::before {
-  content: "";
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #36c28e;
-  margin-right: 6px;
-}
-
 .chat-guide {
-  padding: 13px 15px;
-  margin-bottom: 15px;
+  padding: 12px 14px;
   background: white;
-  border-radius: 11px;
+  border-radius: 10px;
   color: #718099;
   font-size: 12px;
-  line-height: 1.8;
+  line-height: 1.7;
+  margin-bottom: 13px;
 }
 
-/* IFRAME CHAT */
-
 .iframe-wrapper {
-  position: relative;
   width: 100%;
-  height: 750px;
-  min-height: 650px;
+  height: 700px;
   background: white;
-  border: 1px solid #edf0f6;
-  border-radius: 13px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
   overflow: hidden;
-  isolation: isolate;
 }
 
 .iframe-wrapper iframe {
   display: block;
-  position: relative;
   width: 100%;
   height: 100%;
-  min-height: 650px;
   border: none;
-  margin: 0;
-  padding: 0;
+}
+
+/* TIMETABLE */
+
+.workspace {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 18px;
+}
+
+.panel {
   background: white;
-  pointer-events: auto;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 20px;
+  min-width: 0;
+}
+
+.panel-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 17px;
+}
+
+.panel-subtitle {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: -10px;
+  margin-bottom: 17px;
+}
+
+/* CALENDAR */
+
+.calendar-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.month-label {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.month-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.month-controls button {
+  width: 31px;
+  height: 31px;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 8px;
+  color: #718099;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.weekday {
+  text-align: center;
+  color: #9ba6b6;
+  font-size: 11px;
+  padding: 8px 0;
+}
+
+.day {
+  min-height: 76px;
+  border: 1px solid transparent;
+  background: #fafbfe;
+  border-radius: 9px;
+  padding: 7px 4px;
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.day:hover {
+  border-color: #b9caff;
+}
+
+.day.selected {
+  background: #edf2ff;
+  border-color: var(--blue);
+}
+
+.day.today .day-number {
+  background: var(--blue);
+  color: white;
+  border-radius: 50%;
+}
+
+.day.other-month {
+  opacity: .35;
+}
+
+.day-number {
+  display: inline-grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  font-size: 11px;
+}
+
+.day-event {
+  display: block;
+  background: #e3ebff;
+  color: #5279ed;
+  font-size: 9px;
+  border-radius: 4px;
+  padding: 3px;
+  margin-top: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* EVENT EDITOR */
+
+.selected-date {
+  font-size: 13px;
+  color: var(--blue);
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-bottom: 13px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  border: 1px solid #e6eaf2;
+  background: #fafbfe;
+  border-radius: 9px;
+  padding: 11px;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--blue);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 65px;
+}
+
+.primary-btn {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: var(--blue);
+  color: white;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.secondary-btn {
+  border: 1px solid var(--border);
+  background: white;
+  color: #64738c;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-size: 12px;
+}
+
+.event-list {
+  margin-top: 22px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f3f7;
+}
+
+.event-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--blue);
+  flex-shrink: 0;
+}
+
+.event-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-info strong {
+  display: block;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.event-info span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.event-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.event-actions button {
+  border: none;
+  background: #f2f5fc;
+  color: #718099;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 10px;
+}
+
+/* IMAGE EDITOR */
+
+.image-upload {
+  display: block;
+  border: 1.5px dashed #cbd7f2;
+  border-radius: 13px;
+  padding: 25px 15px;
+  text-align: center;
+  background: #f8faff;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.image-upload:hover {
+  border-color: var(--blue);
+  background: #f1f5ff;
+}
+
+.image-upload strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.image-upload span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.image-upload input {
+  display: none;
+}
+
+.image-preview {
+  width: 100%;
+  max-height: 350px;
+  object-fit: contain;
+  background: #f7f8fc;
+  border-radius: 10px;
+  display: none;
+  margin-bottom: 12px;
+}
+
+.image-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.image-actions button {
+  flex: 1;
+}
+
+.empty {
+  color: #a0aabc;
+  font-size: 12px;
+  text-align: center;
+  padding: 18px 5px;
+}
+
+.notice {
+  margin-top: 15px;
+  padding: 12px;
+  background: #f3f6ff;
+  color: #718099;
+  border-radius: 10px;
+  font-size: 11px;
+  line-height: 1.7;
 }
 
 /* FOOTER */
 
 footer {
-  margin-top: 25px;
   text-align: center;
   color: #a1adbd;
   font-size: 11px;
+  margin-top: 28px;
 }
 
-/* MOBILE */
-
-@media (max-width: 700px) {
-
+@media(max-width: 750px) {
   body {
     padding: 10px;
   }
 
   .container {
-    padding: 23px 16px;
-    border-radius: 19px;
+    padding: 22px 15px;
+    border-radius: 18px;
   }
 
   header {
-    margin-bottom: 40px;
-  }
-
-  .hero {
     margin-bottom: 30px;
   }
 
-  .hero h1 {
-    font-size: 28px;
+  .navigation {
+    gap: 3px;
+    margin-bottom: 27px;
+  }
+
+  .nav-btn {
+    font-size: 11px;
+    padding: 12px 4px;
   }
 
   .cards {
     grid-template-columns: 1fr;
-    gap: 10px;
   }
 
   .card {
     min-height: auto;
-    padding: 18px;
+    padding: 17px;
   }
 
-  .card-icon {
-    margin-bottom: 10px;
-  }
-
-  .chat-box {
-    padding: 12px;
+  .workspace {
+    grid-template-columns: 1fr;
   }
 
   .iframe-wrapper {
-    height: 750px;
-    min-height: 750px;
+    height: 650px;
   }
 
-  .iframe-wrapper iframe {
-    min-height: 750px;
+  .day {
+    min-height: 59px;
+    padding: 3px;
+  }
+
+  .day-event {
+    font-size: 8px;
   }
 }
-
 </style>
 </head>
 
@@ -323,148 +685,743 @@ footer {
 
 <div class="container">
 
-  <!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">✦</div>
+    Study Mate
+  </div>
+  <div class="header-tag">AI STUDY PLANNER</div>
+</header>
 
-  <header>
+<nav class="navigation">
+  <button class="nav-btn active" data-view="home">홈</button>
+  <button class="nav-btn" data-view="study">📅 공부 계획</button>
+  <button class="nav-btn" data-view="exam">📝 시험 대비</button>
+  <button class="nav-btn" data-view="schedule">🗓️ 시간표 관리</button>
+</nav>
 
-    <div class="logo">
-      <div class="logo-icon">✦</div>
-      Study Mate
-    </div>
+<!-- HOME -->
 
-    <div class="tag">
-      AI STUDY PLANNER
-    </div>
+<section class="view active" id="home">
 
-  </header>
-
-
-  <!-- MAIN INTRO -->
-
-  <section class="hero">
-
-    <div class="eyebrow">
-      YOUR PERSONAL STUDY ASSISTANT
-    </div>
-
-    <h1>
-      안녕! 오늘도<br>
-      <span>성장할 준비 됐니?</span>
-    </h1>
-
+  <div class="hero">
+    <div class="eyebrow">YOUR PERSONAL STUDY ASSISTANT</div>
+    <h1>안녕! 오늘도<br><span>성장할 준비 됐니?</span></h1>
     <p>
-      막막한 공부 계획부터 시험 대비까지,<br>
+      공부 계획부터 시험 대비까지,<br>
       Study Mate와 함께 효율적으로 공부해 보자.
     </p>
-
-  </section>
-
-
-  <!-- FUNCTION CARDS -->
-
-  <div class="section-heading">
-    Study Mate가 도와줄 수 있는 것
   </div>
 
-  <section class="cards">
+  <div class="section-heading">무엇을 도와줄까?</div>
 
-    <div class="card">
+  <div class="cards">
 
+    <button class="card" data-go="study">
       <div class="card-icon">📅</div>
-
       <h3>공부 계획 세우기</h3>
+      <p>나의 일정과 공부량에 맞는<br>맞춤형 학습 계획 만들기</p>
+      <span class="card-arrow">시작하기 →</span>
+    </button>
 
-      <p>
-        나의 일정과 공부량에 맞는<br>
-        맞춤형 학습 계획 만들기
-      </p>
-
-    </div>
-
-
-    <div class="card">
-
+    <button class="card" data-go="exam">
       <div class="card-icon">📝</div>
-
       <h3>시험 대비하기</h3>
+      <p>시험일까지 남은 시간을 활용해<br>과목별 학습 계획 세우기</p>
+      <span class="card-arrow">시작하기 →</span>
+    </button>
 
-      <p>
-        시험일까지 남은 시간을 활용해<br>
-        과목별 학습 계획 세우기
-      </p>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="card-icon">⏰</div>
-
+    <button class="card" data-go="schedule">
+      <div class="card-icon">🗓️</div>
       <h3>시간표 관리하기</h3>
+      <p>나만의 캘린더와 학습 이미지를<br>직접 확인하고 수정하기</p>
+      <span class="card-arrow">관리하기 →</span>
+    </button>
 
-      <p>
-        학교 일정과 개인 시간을 고려한<br>
-        현실적인 하루 시간표 만들기
-      </p>
+  </div>
 
-    </div>
-
-  </section>
+</section>
 
 
-  <!-- AI CHAT -->
+<!-- STUDY PLAN AGENT -->
 
-  <section class="chat-box">
+<section class="view" id="study">
 
-    <div class="chat-header">
+  <button class="back-btn" data-go="home">← 홈으로 돌아가기</button>
 
-      <div class="bot-icon">🤖</div>
+  <div class="page-heading">
+    <h2>📅 공부 계획 세우기</h2>
+    <p>나의 목표와 학습 일정에 맞는 공부 계획을 만들어 보자.</p>
+  </div>
 
-      <div class="chat-title">
+  <div class="agent-box">
 
-        <h2>Study Mate AI</h2>
-
-        <p>
-          너에게 맞는 공부 방법을 함께 찾아볼게!
-        </p>
-
+    <div class="agent-header">
+      <div class="agent-icon">🤖</div>
+      <div>
+        <h3>Study Mate AI</h3>
+        <p>맞춤형 학습 계획 도우미</p>
       </div>
-
-      <div class="status">
-        AI ASSISTANT
-      </div>
-
+      <div class="agent-status">● 연결</div>
     </div>
-
 
     <div class="chat-guide">
-      💡 예시 : 다음 주 시험인데 수학, 영어, 과학 공부 계획을 짜 줘!
+      💡 예시: 이번 주 수학과 영어 공부 계획을 짜 줘.
     </div>
-
-
-    <!-- COPILOT STUDIO ORIGINAL IFRAME -->
 
     <div class="iframe-wrapper">
-
       <iframe
         src="https://copilotstudio.microsoft.com/environments/4950c877-33c2-e096-ac60-f5b5afd14db4/bots/cr765_bot_VNCO31/webchat?__version__=2&enableFileAttachment=false&cliAgent=true"
-        title="Study Mate AI 학습 플래너"
-        allow="microphone"
-        scrolling="yes">
+        title="공부 계획 에이전트"
+        allow="microphone">
       </iframe>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- EXAM AGENT -->
+
+<section class="view" id="exam">
+
+  <button class="back-btn" data-go="home">← 홈으로 돌아가기</button>
+
+  <div class="page-heading">
+    <h2>📝 시험 대비하기</h2>
+    <p>시험일까지 남은 기간을 활용해 효율적으로 준비해 보자.</p>
+  </div>
+
+  <div class="agent-box">
+
+    <div class="agent-header">
+      <div class="agent-icon">🎯</div>
+      <div>
+        <h3>Exam Mate AI</h3>
+        <p>시험 대비 및 과목별 학습 도우미</p>
+      </div>
+      <div class="agent-status">● 연결</div>
+    </div>
+
+    <div class="chat-guide">
+      💡 예시: 2주 뒤 시험이야. 국어, 수학, 영어 계획을 세워 줘.
+    </div>
+
+    <div class="iframe-wrapper">
+      <iframe
+        src="https://copilotstudio.microsoft.com/environments/4950c877-33c2-e096-ac60-f5b5afd14db4/bots/cr765_bot_VNCO31/webchat?__version__=2&enableFileAttachment=false&cliAgent=true"
+        title="시험 대비 에이전트"
+        allow="microphone">
+      </iframe>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TIMETABLE MANAGER -->
+
+<section class="view" id="schedule">
+
+  <button class="back-btn" data-go="home">← 홈으로 돌아가기</button>
+
+  <div class="page-heading">
+    <h2>🗓️ 나의 시간표 관리</h2>
+    <p>공부 일정과 학습 자료를 한곳에서 관리해 보자.</p>
+  </div>
+
+  <div class="workspace">
+
+    <!-- CALENDAR -->
+
+    <div class="panel">
+
+      <div class="panel-title">📅 나의 학습 캘린더</div>
+      <p class="panel-subtitle">날짜를 선택해서 일정을 추가하거나 수정해 봐.</p>
+
+      <div class="calendar-top">
+        <div class="month-label" id="monthLabel"></div>
+
+        <div class="month-controls">
+          <button id="prevMonth">‹</button>
+          <button id="todayBtn">오늘</button>
+          <button id="nextMonth">›</button>
+        </div>
+      </div>
+
+      <div class="calendar-grid" id="calendar">
+
+      </div>
+
+      <div class="notice">
+        💡 날짜를 선택하면 해당 날짜의 공부 일정을 추가하거나 수정할 수 있어.
+      </div>
 
     </div>
 
-  </section>
+
+    <!-- EVENT EDITOR -->
+
+    <div class="panel">
+
+      <div class="panel-title">✏️ 일정 편집</div>
+
+      <div class="selected-date" id="selectedDate"></div>
+
+      <form id="eventForm">
+
+        <input type="hidden" id="editId">
+
+        <div class="form-group">
+          <label for="eventTitle">일정 이름</label>
+          <input id="eventTitle" type="text"
+            placeholder="예: 수학 문제집 풀기" required>
+        </div>
+
+        <div class="form-group">
+          <label for="eventTime">시간</label>
+          <input id="eventTime" type="time">
+        </div>
+
+        <div class="form-group">
+          <label for="eventCategory">과목</label>
+          <select id="eventCategory">
+            <option>기타</option>
+            <option>국어</option>
+            <option>수학</option>
+            <option>영어</option>
+            <option>과학</option>
+            <option>사회</option>
+            <option>예체능</option>
+            <option>휴식</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="eventMemo">메모</label>
+          <textarea id="eventMemo"
+            placeholder="공부할 내용이나 목표를 적어 봐."></textarea>
+        </div>
+
+        <button class="primary-btn" type="submit" id="saveEvent">
+          일정 추가하기
+        </button>
+
+        <button class="secondary-btn" type="button"
+          id="cancelEdit"
+          style="display:none;width:100%;margin-top:8px;">
+          수정 취소
+        </button>
+
+      </form>
+
+      <div class="event-list">
+        <div class="panel-title" style="font-size:13px;">
+          선택한 날짜의 일정
+        </div>
+        <div id="eventList"></div>
+      </div>
+
+    </div>
+
+  </div>
 
 
-  <!-- FOOTER -->
+  <!-- IMAGE MANAGER -->
 
-  <footer>
-    Study Mate · Make your study smarter
-  </footer>
+  <div class="panel" style="margin-top:18px;">
+
+    <div class="panel-title">🖼️ 학습 이미지 보관함</div>
+
+    <p class="panel-subtitle">
+      AI가 만든 공부 계획표나 시간표 이미지를 업로드하고 확인할 수 있어.
+    </p>
+
+    <label class="image-upload">
+      <strong>＋ 이미지 업로드하기</strong>
+      <span>클릭해서 이미지 파일을 선택해 줘.</span>
+      <input type="file" id="imageInput" accept="image/*">
+    </label>
+
+    <img id="imagePreview" class="image-preview" alt="업로드한 학습 이미지">
+
+    <div class="image-actions">
+      <button class="secondary-btn" id="downloadImage" style="display:none;">
+        이미지 다운로드
+      </button>
+
+      <button class="secondary-btn" id="deleteImage" style="display:none;">
+        이미지 제거
+      </button>
+    </div>
+
+    <div class="notice">
+      💡 이미지는 미리보기와 다운로드, 교체 및 삭제가 가능해.
+      이미지 안의 글자나 디자인을 직접 편집하는 기능은 포함되어 있지 않아.
+    </div>
+
+  </div>
+
+</section>
+
+
+<footer>
+  Study Mate · Make your study smarter
+</footer>
 
 </div>
+
+
+<script>
+
+/* VIEW NAVIGATION */
+
+const views = document.querySelectorAll('.view');
+const navButtons = document.querySelectorAll('.nav-btn');
+
+function showView(name) {
+
+  views.forEach(view => {
+    view.classList.toggle('active', view.id === name);
+  });
+
+  navButtons.forEach(button => {
+    button.classList.toggle(
+      'active',
+      button.dataset.view === name
+    );
+  });
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+document.querySelectorAll('[data-go]').forEach(button => {
+  button.addEventListener('click', () => {
+    showView(button.dataset.go);
+  });
+});
+
+navButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    showView(button.dataset.view);
+  });
+});
+
+
+/* CALENDAR */
+
+const today = new Date();
+
+let currentYear = today.getFullYear();
+let currentMonth = today.getMonth();
+
+let selectedDate = formatDate(today);
+let events = [];
+
+try {
+  events = JSON.parse(
+    localStorage.getItem('studyMateEvents') || '[]'
+  );
+} catch {
+  events = [];
+}
+
+const calendar = document.getElementById('calendar');
+const monthLabel = document.getElementById('monthLabel');
+
+const selectedDateLabel = document.getElementById('selectedDate');
+
+function formatDate(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+
+  return `${y}-${m}-${d}`;
+}
+
+function saveEvents() {
+  localStorage.setItem(
+    'studyMateEvents',
+    JSON.stringify(events)
+  );
+}
+
+function renderCalendar() {
+
+  calendar.innerHTML = '';
+
+  monthLabel.textContent =
+    `${currentYear}년 ${currentMonth + 1}월`;
+
+  const weekdays = ['일','월','화','수','목','금','토'];
+
+  weekdays.forEach(day => {
+    const el = document.createElement('div');
+    el.className = 'weekday';
+    el.textContent = day;
+    calendar.appendChild(el);
+  });
+
+  const firstDay = new Date(currentYear, currentMonth, 1);
+  const lastDay = new Date(currentYear, currentMonth + 1, 0);
+
+  const startDay = firstDay.getDay();
+  const totalDays = lastDay.getDate();
+
+  const previousMonthDays =
+    new Date(currentYear, currentMonth, 0).getDate();
+
+  const totalCells = Math.ceil((startDay + totalDays) / 7) * 7;
+
+  for (let i = 0; i < totalCells; i++) {
+
+    let dayNumber;
+    let dateString;
+    let otherMonth = false;
+
+    if (i < startDay) {
+      dayNumber = previousMonthDays - startDay + i + 1;
+
+      dateString = formatDate(
+        new Date(currentYear, currentMonth - 1, dayNumber)
+      );
+
+      otherMonth = true;
+
+    } else if (i >= startDay + totalDays) {
+
+      dayNumber = i - startDay - totalDays + 1;
+
+      dateString = formatDate(
+        new Date(currentYear, currentMonth + 1, dayNumber)
+      );
+
+      otherMonth = true;
+
+    } else {
+
+      dayNumber = i - startDay + 1;
+
+      dateString = formatDate(
+        new Date(currentYear, currentMonth, dayNumber)
+      );
+    }
+
+    const cell = document.createElement('div');
+
+    cell.className = 'day';
+
+    if (otherMonth) cell.classList.add('other-month');
+    if (dateString === selectedDate) cell.classList.add('selected');
+    if (dateString === formatDate(today)) cell.classList.add('today');
+
+    const number = document.createElement('span');
+    number.className = 'day-number';
+    number.textContent = dayNumber;
+
+    cell.appendChild(number);
+
+    const dayEvents = events
+      .filter(event => event.date === dateString)
+      .sort((a,b) => (a.time || '').localeCompare(b.time || ''));
+
+    dayEvents.slice(0,2).forEach(event => {
+      const eventEl = document.createElement('span');
+      eventEl.className = 'day-event';
+      eventEl.textContent = event.title;
+      cell.appendChild(eventEl);
+    });
+
+    if (dayEvents.length > 2) {
+      const more = document.createElement('span');
+      more.className = 'day-event';
+      more.textContent = `+${dayEvents.length - 2}개`;
+      cell.appendChild(more);
+    }
+
+    cell.addEventListener('click', () => {
+
+      selectedDate = dateString;
+
+      const selected = new Date(
+        dateString + 'T12:00:00'
+      );
+
+      currentYear = selected.getFullYear();
+      currentMonth = selected.getMonth();
+
+      resetForm();
+      renderCalendar();
+      renderEventList();
+
+    });
+
+    calendar.appendChild(cell);
+  }
+
+  selectedDateLabel.textContent = selectedDate;
+}
+
+
+function renderEventList() {
+
+  const list = document.getElementById('eventList');
+
+  list.innerHTML = '';
+
+  const dayEvents = events
+    .filter(event => event.date === selectedDate)
+    .sort((a,b) => (a.time || '').localeCompare(b.time || ''));
+
+  if (dayEvents.length === 0) {
+    list.innerHTML =
+      '<div class="empty">아직 등록된 일정이 없어.</div>';
+    return;
+  }
+
+  dayEvents.forEach(event => {
+
+    const item = document.createElement('div');
+    item.className = 'event-item';
+
+    const dot = document.createElement('div');
+    dot.className = 'event-dot';
+
+    const info = document.createElement('div');
+    info.className = 'event-info';
+
+    const title = document.createElement('strong');
+    title.textContent = event.title;
+
+    const details = document.createElement('span');
+
+    details.textContent =
+      `${event.time || '시간 미정'} · ${event.category}`;
+
+    info.append(title, details);
+
+    const actions = document.createElement('div');
+    actions.className = 'event-actions';
+
+    const edit = document.createElement('button');
+    edit.textContent = '수정';
+
+    edit.addEventListener('click', () => {
+      document.getElementById('editId').value = event.id;
+      document.getElementById('eventTitle').value = event.title;
+      document.getElementById('eventTime').value = event.time || '';
+      document.getElementById('eventCategory').value = event.category;
+      document.getElementById('eventMemo').value = event.memo || '';
+
+      document.getElementById('saveEvent').textContent = '수정 내용 저장';
+      document.getElementById('cancelEdit').style.display = 'block';
+
+      document.getElementById('eventTitle').focus();
+    });
+
+    const remove = document.createElement('button');
+    remove.textContent = '삭제';
+
+    remove.addEventListener('click', () => {
+
+      if (!confirm('이 일정을 삭제할까?')) return;
+
+      events = events.filter(e => e.id !== event.id);
+
+      saveEvents();
+      renderCalendar();
+      renderEventList();
+      resetForm();
+    });
+
+    actions.append(edit, remove);
+
+    item.append(dot, info, actions);
+
+    list.appendChild(item);
+  });
+}
+
+
+function resetForm() {
+  document.getElementById('eventForm').reset();
+
+  document.getElementById('editId').value = '';
+
+  document.getElementById('saveEvent').textContent = '일정 추가하기';
+
+  document.getElementById('cancelEdit').style.display = 'none';
+}
+
+
+/* ADD / EDIT EVENTS */
+
+document.getElementById('eventForm').addEventListener('submit', e => {
+
+  e.preventDefault();
+
+  const id = document.getElementById('editId').value;
+
+  const title = document.getElementById('eventTitle').value.trim();
+
+  if (!title) return;
+
+  const eventData = {
+    id: id || (
+      Date.now().toString() +
+      Math.random().toString(36).slice(2)
+    ),
+    date: selectedDate,
+    title,
+    time: document.getElementById('eventTime').value,
+    category: document.getElementById('eventCategory').value,
+    memo: document.getElementById('eventMemo').value
+  };
+
+  if (id) {
+    events = events.map(event =>
+      event.id === id ? eventData : event
+    );
+  } else {
+    events.push(eventData);
+  }
+
+  saveEvents();
+  resetForm();
+  renderCalendar();
+  renderEventList();
+
+});
+
+document.getElementById('cancelEdit').addEventListener(
+  'click',
+  resetForm
+);
+
+
+/* MONTH NAVIGATION */
+
+document.getElementById('prevMonth').addEventListener('click', () => {
+  currentMonth--;
+
+  if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  }
+
+  renderCalendar();
+});
+
+document.getElementById('nextMonth').addEventListener('click', () => {
+  currentMonth++;
+
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  }
+
+  renderCalendar();
+});
+
+document.getElementById('todayBtn').addEventListener('click', () => {
+
+  currentYear = today.getFullYear();
+  currentMonth = today.getMonth();
+  selectedDate = formatDate(today);
+
+  resetForm();
+  renderCalendar();
+  renderEventList();
+});
+
+
+/* IMAGE UPLOAD */
+
+const imageInput = document.getElementById('imageInput');
+const imagePreview = document.getElementById('imagePreview');
+
+let currentImageUrl = null;
+
+imageInput.addEventListener('change', event => {
+
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    alert('이미지 파일만 업로드할 수 있어.');
+    imageInput.value = '';
+    return;
+  }
+
+  if (file.size > 10 * 1024 * 1024) {
+    alert('10MB 이하의 이미지를 선택해 줘.');
+    imageInput.value = '';
+    return;
+  }
+
+  if (currentImageUrl) {
+    URL.revokeObjectURL(currentImageUrl);
+  }
+
+  currentImageUrl = URL.createObjectURL(file);
+
+  imagePreview.src = currentImageUrl;
+  imagePreview.style.display = 'block';
+
+  document.getElementById('downloadImage').style.display = 'block';
+  document.getElementById('deleteImage').style.display = 'block';
+
+});
+
+
+/* IMAGE DOWNLOAD */
+
+document.getElementById('downloadImage').addEventListener('click', () => {
+
+  if (!currentImageUrl) return;
+
+  const link = document.createElement('a');
+
+  link.href = currentImageUrl;
+  link.download = 'Study-Mate-Study-Image';
+
+  link.click();
+
+});
+
+
+/* IMAGE DELETE */
+
+document.getElementById('deleteImage').addEventListener('click', () => {
+
+  if (!confirm('업로드한 이미지를 제거할까?')) return;
+
+  if (currentImageUrl) {
+    URL.revokeObjectURL(currentImageUrl);
+  }
+
+  currentImageUrl = null;
+
+  imagePreview.src = '';
+  imagePreview.style.display = 'none';
+
+  imageInput.value = '';
+
+  document.getElementById('downloadImage').style.display = 'none';
+  document.getElementById('deleteImage').style.display = 'none';
+
+});
+
+
+/* INITIALIZE */
+
+renderCalendar();
+renderEventList();
+
+</script>
 
 </body>
 </html>
